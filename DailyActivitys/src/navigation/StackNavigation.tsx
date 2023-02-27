@@ -1,16 +1,25 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import Intro1 from '../screen/intro/Intro1';
+import Intro from '../screen/intro/Intro';
+import Home from '../screen/home';
+import WelcomeScreen from '../screen/welcomeScreen';
+import LoginScreen from '../screen/auth/login';
 
 export type RootStackParamList = {
-  intro1: undefined;
+  intro: undefined;
+  home: undefined;
+  welcomeScreen: undefined;
+  loginScreen:undefined
 };
 
 const StackNavigation = () => {
   const RootStack = createStackNavigator<RootStackParamList>();
   return (
-    <RootStack.Navigator initialRouteName="intro1" screenOptions={{ headerShown: false }}>
-      <RootStack.Screen name="intro1" component={Intro1} />
+    <RootStack.Navigator initialRouteName="intro" screenOptions={{ headerShown: false }}>
+      <RootStack.Screen name="intro" component={Intro} />
+      <RootStack.Screen name="home" component={Home} />
+      <RootStack.Screen name="welcomeScreen" component={WelcomeScreen} />
+      <RootStack.Screen name="loginScreen" component={LoginScreen} />
     </RootStack.Navigator>
   );
 };
