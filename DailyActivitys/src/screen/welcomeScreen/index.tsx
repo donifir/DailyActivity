@@ -21,7 +21,7 @@ const WelcomeScreen = ({ route, navigation }: Props) => {
       </View>
       <View style={styles.wrapperBtn}>
           <ButtonComponentTauchable label='Login' backgroundColor='#407BFF' textColor='black' borderColor='black' onPress={() => navigation.navigate('loginScreen')}/>
-          <ButtonComponentTauchable label='Register' backgroundColor='white' textColor='black' borderColor='black' onPress={() => navigation.navigate('loginScreen')}/>
+          <ButtonComponentTauchable label='Register' backgroundColor='white' textColor='black' borderColor='black' onPress={() => navigation.navigate('registerScreen')}/>
       </View>
     </View>
   );

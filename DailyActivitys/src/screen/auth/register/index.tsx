@@ -1,25 +1,38 @@
-import {Dimensions, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import {TextInput} from '@react-native-material/core';
 import ButtonComponent from '../../../componen/ButtonComponent';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../navigation/StackNavigation';
+import {RootStackParamList} from '../../../navigation/StackNavigation';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'loginScreen'>;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+type Props = NativeStackScreenProps<RootStackParamList, 'registerScreen'>;
 
-const LoginScreen = ({ route, navigation }: Props) => {
+const RegisterScreen = ({route, navigation}: Props) => {
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.wrapperText}>
-        <Text style={styles.textH1}>Welcome Back</Text>
+        <Text style={styles.textH1}>Create Account</Text>
         <Text style={styles.textH2}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam maecenas
-          mi non sed ut odio. Non, justo, sed facilisi et.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </Text>
       </View>
       <View style={styles.wrapperForm}>
+        <TextInput
+          variant="outlined"
+          label="Name"
+          style={{margin: 16}}
+          color="black"
+        />
         <TextInput
           variant="outlined"
           label="Email"
@@ -32,12 +45,15 @@ const LoginScreen = ({ route, navigation }: Props) => {
           style={{margin: 16}}
           color="black"
         />
-        <Text style={{marginHorizontal: 16, textAlign: 'right', fontSize: 15}}>
-          Forgot Password. ?
-        </Text>
+        <TextInput
+          variant="outlined"
+          label="Confirm Password"
+          style={{margin: 16}}
+          color="black"
+        />
         <View style={styles.wrapperBtn}>
           <ButtonComponent
-            label="Sign In"
+            label="Sign Up"
             backgroundColor="#407BFF"
             textColor="white"
             borderColor="black"
@@ -45,7 +61,9 @@ const LoginScreen = ({ route, navigation }: Props) => {
         </View>
         <View style={styles.wrapperSignUp}>
           <Image source={require('./../../../assets/image/Rectangle29.png')} />
-          <TouchableOpacity  onPress={() => navigation.push('registerScreen')}><Text style={styles.signup}>Or Sign Up</Text></TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.push('loginScreen')}>
+            <Text style={styles.signup}>Or Sign In</Text>
+          </TouchableOpacity>
           <Image source={require('./../../../assets/image/Rectangle30.png')} />
         </View>
       </View>
@@ -53,7 +71,7 @@ const LoginScreen = ({ route, navigation }: Props) => {
   );
 };
 
-export default LoginScreen;
+export default RegisterScreen;
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -63,7 +81,7 @@ const styles = StyleSheet.create({
   wrapperText: {
     paddingTop: 35,
     width: windowWidth,
-    height: windowHeight * 0.25,
+    height: windowHeight * 0.18,
     // backgroundColor:'red',
     // justifyContent:'center',
     alignItems: 'center',
@@ -97,10 +115,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop:10,
+    paddingTop: 10,
   },
-  signup:{
-    marginHorizontal:10,
-    fontSize:15
-  }
+  signup: {
+    marginHorizontal: 10,
+    fontSize: 15,
+  },
 });
