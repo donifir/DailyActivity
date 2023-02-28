@@ -1,15 +1,49 @@
-import {Dimensions, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import {
+  Dimensions,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {TextInput} from '@react-native-material/core';
 import ButtonComponent from '../../../componen/ButtonComponent';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../navigation/StackNavigation';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../../navigation/StackNavigation';
+import {useAppDispatch, useAppSelector} from '../../../app/hooks';
+import {postDataLogin} from '../../../features/authSlice';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'loginScreen'>;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const LoginScreen = ({ route, navigation }: Props) => {
+const LoginScreen = ({route, navigation}: Props) => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [submiting, setSubmiting] = useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
+
+  function handleSubmit() {
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
+    dispatch(postDataLogin(formData));
+    setSubmiting(true)
+  }
+
+  const dataError = useAppSelector(state => state.auth.dataError);
+  const isRedirect = useAppSelector(state => state.auth.isRedirect);
+
+  useEffect(() => {
+    if (isRedirect==true && submiting==true) {
+      navigation.push('home')
+    }
+  }, [isRedirect, submiting])
+  
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.wrapperText}>
@@ -21,31 +55,42 @@ const LoginScreen = ({ route, navigation }: Props) => {
       </View>
       <View style={styles.wrapperForm}>
         <TextInput
+          autoCapitalize="none"
           variant="outlined"
           label="Email"
           style={{margin: 16}}
           color="black"
+          value={email}
+          onChangeText={value => setEmail(value)}
         />
+        {dataError.email && submiting==true?<Text style={styles.dataError}>{dataError.email}</Text>:<></>}
         <TextInput
+          autoCapitalize="none"
           variant="outlined"
           label="Password"
           style={{margin: 16}}
           color="black"
+          value={password}
+          onChangeText={value => setPassword(value)}
         />
+        {dataError.password && submiting==true?<Text style={styles.dataError}>{dataError.password}</Text>:<></>}
+
         <Text style={{marginHorizontal: 16, textAlign: 'right', fontSize: 15}}>
           Forgot Password. ?
         </Text>
-        <View style={styles.wrapperBtn}>
+        <TouchableOpacity style={styles.wrapperBtn} onPress={handleSubmit}>
           <ButtonComponent
             label="Sign In"
             backgroundColor="#407BFF"
             textColor="white"
             borderColor="black"
           />
-        </View>
+        </TouchableOpacity>
         <View style={styles.wrapperSignUp}>
           <Image source={require('./../../../assets/image/Rectangle29.png')} />
-          <TouchableOpacity  onPress={() => navigation.push('registerScreen')}><Text style={styles.signup}>Or Sign Up</Text></TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.push('registerScreen')}>
+            <Text style={styles.signup}>Or Sign Up</Text>
+          </TouchableOpacity>
           <Image source={require('./../../../assets/image/Rectangle30.png')} />
         </View>
       </View>
@@ -97,10 +142,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop:10,
+    paddingTop: 10,
   },
-  signup:{
-    marginHorizontal:10,
-    fontSize:15
+  signup: {
+    marginHorizontal: 10,
+    fontSize: 15,
+  },
+  dataError:{
+    color:"red",
+    marginHorizontal:16,
   }
 });

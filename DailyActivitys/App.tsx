@@ -1,16 +1,21 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import StackNavigation from './src/navigation/StackNavigation'
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import StackNavigation from './src/navigation/StackNavigation';
+
+import {Provider} from 'react-redux';
+import { store } from './src/app/store';
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <StackNavigation/>
-    </NavigationContainer>
-  )
-}
+    <Provider store={store}>
+      <NavigationContainer>
+        <StackNavigation />
+      </NavigationContainer>
+    </Provider>
+  );
+};
 
-export default App
+export default App;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
