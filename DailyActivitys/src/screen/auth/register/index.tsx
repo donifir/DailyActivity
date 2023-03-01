@@ -42,11 +42,11 @@ const RegisterScreen = ({route, navigation}: Props) => {
   const dataError = useAppSelector(state => state.auth.dataError);
   const isRedirect = useAppSelector(state => state.auth.isRedirect);
 
-  useEffect(() => {
-    if (isRedirect==true && submiting==true) {
-      navigation.push('home')
-    }
-  }, [isRedirect,submiting])
+  // useEffect(() => {
+  //   if (isRedirect==true && submiting==true) {
+  //     navigation.push('home')
+  //   }
+  // }, [isRedirect,submiting])
   
 
 
@@ -68,7 +68,7 @@ const RegisterScreen = ({route, navigation}: Props) => {
           value={nama}
           onChangeText={value => setNama(value)}
         />
-        {dataError.nama ? <Text style={styles.dataError}>{dataError.nama}</Text> : <></>}
+        {dataError.nama && submiting==true? <Text style={styles.dataError}>{dataError.nama}</Text> : <></>}
         <TextInput
           autoCapitalize='none'
           variant="outlined"
@@ -78,7 +78,7 @@ const RegisterScreen = ({route, navigation}: Props) => {
           value={email}
           onChangeText={value => setEmail(value)}
         />
-        {dataError.email ? <Text style={styles.dataError}>{dataError.email}</Text> : <></>}
+        {dataError.email && submiting==true? <Text style={styles.dataError}>{dataError.email}</Text> : <></>}
         <TextInput
           autoCapitalize='none'
           variant="outlined"
@@ -88,7 +88,7 @@ const RegisterScreen = ({route, navigation}: Props) => {
           value={password}
           onChangeText={value => setPassword(value)}
         />
-        {dataError.password ? <Text style={styles.dataError}>{dataError.password}</Text> : <></>}
+        {dataError.password && submiting==true? <Text style={styles.dataError}>{dataError.password}</Text> : <></>}
         <TextInput
           autoCapitalize='none'
           variant="outlined"
@@ -98,7 +98,7 @@ const RegisterScreen = ({route, navigation}: Props) => {
           value={confirmPassword}
           onChangeText={value => setConfirmPassword(value)}
         />
-        {dataError.confirm_password ? <Text style={styles.dataError}>{dataError.confirm_password}</Text> : <></>}
+        {dataError.confirm_password && submiting==true? <Text style={styles.dataError}>{dataError.confirm_password}</Text> : <></>}
         <TouchableOpacity style={styles.wrapperBtn} onPress={handleSubmit}>
           <ButtonComponent
             label="Sign Up"

@@ -1,4 +1,5 @@
 import {
+  Alert,
   Dimensions,
   Image,
   SafeAreaView,
@@ -13,7 +14,7 @@ import ButtonComponent from '../../../componen/ButtonComponent';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../navigation/StackNavigation';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
-import {postDataLogin} from '../../../features/authSlice';
+import {postDataLogin, resetState} from '../../../features/authSlice';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'loginScreen'>;
 const windowWidth = Dimensions.get('window').width;
@@ -38,11 +39,12 @@ const LoginScreen = ({route, navigation}: Props) => {
   const isRedirect = useAppSelector(state => state.auth.isRedirect);
 
   useEffect(() => {
-    if (isRedirect==true && submiting==true) {
-      navigation.push('home')
-    }
-  }, [isRedirect, submiting])
-  
+    if (dataError==='invalid credensial' && submiting===true ) {
+      Alert.alert('Gagal','invalid credensial')
+      dispatch(resetState());
+  }
+  }, [isRedirect, submiting,dataError])
+
 
   return (
     <SafeAreaView style={styles.wrapper}>
@@ -74,7 +76,7 @@ const LoginScreen = ({route, navigation}: Props) => {
           onChangeText={value => setPassword(value)}
         />
         {dataError.password && submiting==true?<Text style={styles.dataError}>{dataError.password}</Text>:<></>}
-
+      {/* {dataError==='invalid credensial' && submiting==true?[Alert.alert('gagal',dataError), setSubmiting(false)]:<></>} */}
         <Text style={{marginHorizontal: 16, textAlign: 'right', fontSize: 15}}>
           Forgot Password. ?
         </Text>
