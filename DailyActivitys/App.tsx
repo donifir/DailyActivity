@@ -6,6 +6,9 @@ import StackNavigation from './src/navigation/StackNavigation';
 import {Provider} from 'react-redux';
 import { store } from './src/app/store';
 
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs(true);
+
 const App = () => {
   return (
     <Provider store={store}>
