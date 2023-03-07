@@ -1466,10 +1466,15 @@
 
 "@react-native-async-storage/async-storage@^1.17.11":
   version "1.17.11"
-  resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.17.11.tgz#7ec329c1b9f610e344602e806b04d7c928a2341d"
+  resolved "https://registry.npmjs.org/@react-native-async-storage/async-storage/-/async-storage-1.17.11.tgz"
   integrity sha512-bzs45n5HNcDq6mxXnSsOHysZWn1SbbebNxldBXCQs8dSvF8Aor9KCdpm+TpnnGweK3R6diqsT8lFhX77VX0NFw==
   dependencies:
     merge-options "^3.0.4"
+
+"@react-native-community/checkbox@^0.5.14":
+  version "0.5.14"
+  resolved "https://registry.npmjs.org/@react-native-community/checkbox/-/checkbox-0.5.14.tgz"
+  integrity sha512-UmGf3wBpoCXLmVRKIDZyzOG+QR1fOhm0FOw4KzxHTCXpsBvZgIn5wbJ+MWk4io5RohQdY8GSX2MYFmkPJeJpeA==
 
 "@react-native-community/cli-clean@^10.1.1":
   version "10.1.1"
@@ -4256,7 +4261,7 @@ is-path-inside@^3.0.3:
 
 is-plain-obj@^2.1.0:
   version "2.1.0"
-  resolved "https://registry.yarnpkg.com/is-plain-obj/-/is-plain-obj-2.1.0.tgz#45e42e37fccf1f40da8e5f76ee21515840c09287"
+  resolved "https://registry.npmjs.org/is-plain-obj/-/is-plain-obj-2.1.0.tgz"
   integrity sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA==
 
 is-plain-object@^2.0.3, is-plain-object@^2.0.4:
@@ -5108,7 +5113,7 @@ memoize-one@^5.0.0:
 
 merge-options@^3.0.4:
   version "3.0.4"
-  resolved "https://registry.yarnpkg.com/merge-options/-/merge-options-3.0.4.tgz#84709c2aa2a4b24c1981f66c179fe5565cc6dbb7"
+  resolved "https://registry.npmjs.org/merge-options/-/merge-options-3.0.4.tgz"
   integrity sha512-2Sug1+knBjkaMsMgf1ctR1Ujx+Ayku4EdJN4Z+C2+JzoeF7A3OZ9KM2GY0CpQS51NR61LTurMJrRKPhSs3ZRTQ==
   dependencies:
     is-plain-obj "^2.1.0"
@@ -6154,6 +6159,11 @@ react-is@^17.0.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-bouncy-checkbox@^3.0.7:
+  version "3.0.7"
+  resolved "https://registry.npmjs.org/react-native-bouncy-checkbox/-/react-native-bouncy-checkbox-3.0.7.tgz"
+  integrity sha512-776TgMGt9wTpOQA1TcvFjL5VUn6o945wFYf3Ztqva62/vT2o3JAezLiP7hYh2Svd+PewfWBYSPMs4jeaSoS8Sg==
+
 react-native-codegen@^0.71.5:
   version "0.71.5"
   resolved "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.71.5.tgz"
@@ -6163,6 +6173,20 @@ react-native-codegen@^0.71.5:
     flow-parser "^0.185.0"
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
+
+react-native-date-picker@^4.2.9:
+  version "4.2.9"
+  resolved "https://registry.yarnpkg.com/react-native-date-picker/-/react-native-date-picker-4.2.9.tgz#c916231025dac1fd8f90783d06b092e74ec12948"
+  integrity sha512-msx877/ULxaoceqOV3GKx/A93ninYmOp46w5DOCh3pQGPbgL4ZmbglvXJ3mOp2h/j5scuYf9+NetCRLqj1pODA==
+  dependencies:
+    prop-types "^15.8.1"
+
+react-native-element-textinput@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-element-textinput/-/react-native-element-textinput-2.2.0.tgz#b3a5448359e93492eaaa1fce86374ded241dba5c"
+  integrity sha512-fLq0F/Z98N/ISruiuyKiaeM1fQaNb/CLIAC9vQ16f1zFd1thsLBEXusUCFhTEs6KlVZ4BWOnVPMAZXFNr5zfDg==
+  dependencies:
+    react-native-virtualized-view "*"
 
 react-native-flex-layout@^0.1.5:
   version "0.1.5"
@@ -6218,6 +6242,11 @@ react-native-svg@^13.8.0:
   dependencies:
     css-select "^5.1.0"
     css-tree "^1.1.3"
+
+react-native-virtualized-view@*:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-virtualized-view/-/react-native-virtualized-view-1.0.0.tgz#fd2129f1309d1ff4b9e869d5050e803640ca64c5"
+  integrity sha512-7YyFMMkNzJ787/giGkKcm0JEx0IcLEE/XHREGz2I4K1RISQGFjEDe6iWsapOnHSR/e1vhebZJ8VmqhSpg5YPzg==
 
 react-native@0.71.3:
   version "0.71.3"

@@ -10,12 +10,14 @@ const windowHeight = Dimensions.get('window').height;
 const SplashScreen = () => {
   const redirect = useAppSelector(state => state.auth.isRedirect);
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (redirect === true) {
       setTimeout(() => {
         dispatch(resetState());
       }, 1700);
     }
+    
   }, [redirect]);
 
   return (

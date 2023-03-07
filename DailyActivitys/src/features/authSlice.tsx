@@ -36,6 +36,7 @@ export const postDataRegister = createAsyncThunk(
         console.log(response.data.token);
         AsyncStorage.setItem('email', response.data.email);
         AsyncStorage.setItem('token', response.data.token);
+        AsyncStorage.setItem('user_id', '' + response.data.user_id);
         return response.data;
       })
       .catch(function (error) {
@@ -53,6 +54,7 @@ export const postDataLogin = createAsyncThunk(
         console.log(response.data);
         AsyncStorage.setItem('email', response.data.email);
         AsyncStorage.setItem('token', response.data.token);
+        AsyncStorage.setItem('user_id', '' + response.data.user_id);
         return response.data;
       })
       .catch(function (error) {
@@ -68,6 +70,7 @@ export const postDataLogout = createAsyncThunk(
     await axios
       .post('/logout', formData, header)
       .then(function (response) {
+        AsyncStorage.removeItem('user_id');
         AsyncStorage.removeItem('email');
         AsyncStorage.removeItem('token');
         console.log(response.data);
@@ -75,6 +78,9 @@ export const postDataLogout = createAsyncThunk(
       })
       .catch(function (error) {
         console.log('data gagal', error.response.data.messages);
+        AsyncStorage.removeItem('user_id');
+        AsyncStorage.removeItem('email');
+        AsyncStorage.removeItem('token');
         // return rejectWithValue(error.response.data.messages);
       }),
 );
@@ -89,6 +95,7 @@ export interface DataState {
   isRedirect: boolean;
   dataUser: UserModel;
   dataError: any;
+  dataAuth: any;
 }
 
 const initialState: DataState = {
@@ -97,7 +104,8 @@ const initialState: DataState = {
   isError: false,
   dataUser: {name: '', email: '', password: '', confirmPassword: ''},
   dataError: [],
-  isRedirect: false,
+  dataAuth: [],
+  isRedirect: true,
 };
 
 export const authSlice = createSlice({
@@ -105,6 +113,7 @@ export const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers(builder) {
+
     // reset state
     builder.addCase(resetState.fulfilled, (state, action) => {
       (state.isPending = false),
@@ -164,6 +173,12 @@ export const authSlice = createSlice({
         (state.isError = false),
         (state.isRedirect = true),
         (state.dataUser = action.payload);
+    });
+    builder.addCase(postDataLogout.rejected, (state, action) => {
+      (state.isPending = false),
+        (state.isSuccess = false),
+        (state.isError = true),
+        (state.isRedirect = true)
     });
   },
 });

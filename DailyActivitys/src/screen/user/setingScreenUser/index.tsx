@@ -40,6 +40,17 @@ const SetingSreenUser = () => {
     }
   };
 
+  const removeValue = async () => {
+    try {
+      await AsyncStorage.removeItem('token')
+      await AsyncStorage.removeItem('email')
+    } catch(e) {
+      // remove error
+    }
+  
+    console.log('Done.')
+  }
+
   useEffect(() => {
     getToken();
   }, [isRedirect]);
@@ -102,9 +113,9 @@ const SetingSreenUser = () => {
       </View>
 
       {/* hapus and logouy */}
-      <View style={[styles.wrapperDelete, styles.shadow, {marginTop:40}]}>
+      <TouchableOpacity style={[styles.wrapperDelete, styles.shadow, {marginTop:40}]} onPress={()=>removeValue()}>
         <Text style={styles.textSubSetting}>Hapus Akun</Text>
-      </View>
+      </TouchableOpacity>
        {/* hapus and logouy */}
        <TouchableOpacity style={[styles.wrapperDelete, styles.shadow]} onPress={()=>handleLogout()}>
         <Text style={styles.textSubSetting}>Logout</Text>
