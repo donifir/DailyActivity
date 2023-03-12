@@ -1,0 +1,41 @@
+
+kunjungi
+https://reactnative.dev/docs/signed-apk-android
+
+Generating an upload key
+		sudo keytool -genkey -v -keystore my-upload-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
+	->masukan uplaoad key ke android app
+
+masuk ke aplikasi di vscoe
+	-masuk ke
+		-android/gradle.properties
+			MYAPP_UPLOAD_STORE_FILE=my-upload-key.keystore
+			MYAPP_UPLOAD_KEY_ALIAS=my-key-alias
+			MYAPP_UPLOAD_STORE_PASSWORD=12345678
+			MYAPP_UPLOAD_KEY_PASSWORD=12345678
+			
+	-buka android/app/build.gradle
+			   signingConfigs {
+							release {
+									if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+											storeFile file(MYAPP_UPLOAD_STORE_FILE)
+											storePassword MYAPP_UPLOAD_STORE_PASSWORD
+											keyAlias MYAPP_UPLOAD_KEY_ALIAS
+											keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+									}
+							}
+					}
+
+masuk ke folder android
+cd android
+	./gradlew assembleRelease		//untuk file apk
+	./gradlew bundleRelease			//untuk file aab
+	gradlew assembleRelease && gradlew bundleRelease	
+
+	android->app->bild->output->apk->realis //apk
+	android->app->bild->output->build->realis //aab
+
+
+
+
+	ios

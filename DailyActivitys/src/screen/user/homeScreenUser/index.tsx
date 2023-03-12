@@ -13,6 +13,7 @@ import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
 import {
   getListPengingat,
+  getListUserPengingat,
   pengingatSelectors,
 } from '../../../features/pengingatSlide';
 import ButtonCreatePengingat from '../../../componen/ButtonCreatePengingat';
@@ -60,6 +61,10 @@ const HomeScreenUser = () => {
     dispatch(getListPengingat(userId));
   }, [dispatch, userId, userId]);
 
+  const navigateToEdit = (pengingatId:any) => {
+    navigation.push('EditPengingatScreen', {pengingatId});
+  };
+
   return (
     <Animated.View
       entering={FadeIn.duration(500)}
@@ -76,20 +81,20 @@ const HomeScreenUser = () => {
                 source={require('./../../../assets/image/Vector74.png')}
                 imageStyle={{borderRadius: 20}}>
                 <TouchableOpacity
-                // style={{backgroundColor:'blue'}}
+                  // style={{backgroundColor:'blue'}}
                   onPress={() =>
                     navigation.push('ListPengingat', {kegiatanId: pengingat.id})
                   }>
-                <View style={styles.wrapperTextHead}>
-                  <Text
-                    style={{fontSize: 18, color: 'black', fontWeight: '600'}}>
-                    {pengingat.nama_pengingat.substring(0, 30)}
-                  </Text>
-                  <Text style={{fontSize: 14, color: '#5a656b'}}>
-                    {pengingat.keterangan_pengingat.substring(0, 40)}
-                  </Text>
-                </View>
-              
+                  <View style={styles.wrapperTextHead}>
+                    <Text
+                      style={{fontSize: 18, color: 'black', fontWeight: '600'}}>
+                      {pengingat.nama_pengingat.substring(0, 30)}
+                    </Text>
+                    <Text style={{fontSize: 14, color: '#5a656b'}}>
+                      {pengingat.keterangan_pengingat.substring(0, 40)}
+                    </Text>
+                  </View>
+
                   <View style={styles.wrapperTime}>
                     <View style={styles.subWrapperTime}>
                       <Text style={styles.textTimeStyle}>
@@ -118,11 +123,7 @@ const HomeScreenUser = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.wrapperButtonDetail}
-                  onPress={() =>
-                    navigation.navigate('EditPengingatScreen', {
-                      pengingatId: pengingat.id,
-                    })
-                  }>
+                  onPress={()=>navigateToEdit(pengingat.id)}>
                   <FontAwesomeIcon
                     icon={faAngleDoubleUp}
                     size={24}
@@ -130,7 +131,6 @@ const HomeScreenUser = () => {
                   />
                 </TouchableOpacity>
               </ImageBackground>
-              
             </View>
           ),
           // pengingat

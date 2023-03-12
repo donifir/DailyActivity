@@ -70,7 +70,7 @@ const ListPengingat = ({route, navigation}: Props) => {
         style={{flex: 1, alignItems: 'center'}}>
         <View>
           {/* <Text>{idKegiatan}</Text> */}
-          <ButtonbackComponent onPress={() => navigation.push('home')} / >
+          <ButtonbackComponent onPress={() => navigation.goBack()} / >
         </View>
         {listPenginat.map((pengingat, index) => (
           <TouchableOpacity
