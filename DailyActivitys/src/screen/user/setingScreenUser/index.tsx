@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Alert,
   Dimensions,
   StyleSheet,
@@ -9,17 +10,24 @@ import {
 import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {postDataLogout} from '../../../features/authSlice';
+import {getVerifikasiAkun, postDataLogout} from '../../../features/authSlice';
 import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
 import {Avatar} from '@react-native-material/core';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faEye,
+  faLockOpen,
   faMugSaucer,
+  faUnlockAlt,
   faUserCheck,
   faUsersSlash,
+  faUserTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import {Divider} from 'react-native-flex-layout';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../../navigation/StackNavigation';
+import {string} from 'prop-types';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -27,35 +35,39 @@ const windowHeight = Dimensions.get('window').height;
 const SetingSreenUser = () => {
   const isRedirect = useAppSelector(state => state.auth.isRedirect);
   const [email, setEmail] = useState<string>('');
+  const [name, setName] = useState<string>('');
+  const [verified, setVerified] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const dispatch = useAppDispatch();
 
   const getToken = async () => {
     try {
-      const value = await AsyncStorage.getItem('email');
-      if (value !== null) {
-        setEmail(value);
+      const valueEmail = await AsyncStorage.getItem('email');
+      const valueName = await AsyncStorage.getItem('name');
+      const valueVerified = await AsyncStorage.getItem('email_verified_at');
+      if (valueEmail !== null && valueName !== null) {
+        setEmail(valueEmail);
+        setName(valueName);
+        setVerified(valueVerified);
         // Alert.alert('email', value);
       }
     } catch (e) {
       // error reading value
     }
   };
-
-  const removeValue = async () => {
-    try {
-      await AsyncStorage.removeItem('token')
-      await AsyncStorage.removeItem('email')
-    } catch(e) {
-      // remove error
-    }
-  
-    console.log('Done.')
-  }
+  const verifikasiHandler = async () => {
+    setLoading(true)
+    await dispatch(getVerifikasiAkun(email));
+    Alert.alert('Sukses', `Link Verifikasi Telah Dikirim ke email ${email}`);
+    setLoading(false)
+  };
 
   useEffect(() => {
     getToken();
-  }, [isRedirect]);
-
-  const dispatch = useAppDispatch();
+  }, [isRedirect, email]);
 
   const handleLogout = async () => {
     // console.log(email)
@@ -63,6 +75,11 @@ const SetingSreenUser = () => {
     formData.append('email', email);
     await dispatch(postDataLogout(formData));
     // navigation.navigate('intro');
+   
+  };
+
+  const cekverifikasi = () => {
+    Alert.alert('verified', String(verified));
   };
   return (
     <Animated.View
@@ -70,56 +87,75 @@ const SetingSreenUser = () => {
       exiting={FadeOut.duration(500)}
       style={[styles.wrapper]}>
       {/* nama akun */}
+      {/* <Text>haha:{verified}</Text> */}
       <View style={[styles.wrapperSetting, styles.shadow]}>
         <View style={styles.wrapperAvatar}>
-          <Avatar label="Kent Dodds" autoColor />
+          <Avatar label={name} autoColor />
         </View>
         <View style={styles.wrapperNamaAvatar}>
-          <Text style={{fontSize: 20, fontWeight: '500'}}>Doni Firmansyah</Text>
-          <Text style={{fontSize: 16, color: '#4b5357'}}>
-            didonifirmansyah@gmail.com
-          </Text>
+          <Text style={{fontSize: 20, fontWeight: '500'}}>{name}</Text>
+          <Text style={{fontSize: 16, color: '#4b5357'}}>{email}</Text>
         </View>
       </View>
 
       {/* sub seting */}
       <View style={[styles.wrapperSub, styles.shadow]}>
-        <View style={[styles.wrapperSubSetting]}>
+        <TouchableOpacity
+          style={styles.wrapperSubSetting}
+          onPress={() => navigation.navigate('ModalUbahPassword', {email})}>
           <View style={styles.wrapperIcon}>
-            <FontAwesomeIcon icon={faUserCheck} size={29} />
+            <FontAwesomeIcon icon={faUnlockAlt} size={28} />
           </View>
           <View style={[styles.wrapperText, styles.wrapperTextDevider]}>
-            <Text style={styles.textSubSetting}>verifikasi akun</Text>
+            <Text style={styles.textSubSetting}>Ganti Password</Text>
           </View>
-        </View>
-
-        <View style={styles.wrapperSubSetting}>
-          <View style={styles.wrapperIcon}>
-            <FontAwesomeIcon icon={faUsersSlash} size={29} />
+        </TouchableOpacity>
+        { String(verified)==='null' || String(verified)==='' ? (
+          <View style={[styles.wrapperSubSetting]}>
+            <View style={styles.wrapperIcon}>
+              <FontAwesomeIcon icon={faUserTimes} size={29} />
+            </View>
+            <View style={[styles.wrapperText]}>
+              <TouchableOpacity
+                onPress={verifikasiHandler}
+                style={{flexDirection: 'row'}}>
+                <Text style={[styles.textSubSetting]}>Verifikasi Akun</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={[styles.wrapperText, styles.wrapperTextDevider]}>
-            <Text style={styles.textSubSetting}>Blokir User</Text>
+        ) : (
+          <View style={[styles.wrapperSubSetting]}>
+            <View style={styles.wrapperIcon}>
+              <FontAwesomeIcon icon={faUserCheck} size={29} />
+            </View>
+            <View style={[styles.wrapperText]}>
+              <Text style={styles.textSubSetting}>Akun Terverifikasi</Text>
+            </View>
           </View>
-        </View>
-
-        <View style={styles.wrapperSubSetting}>
-          <View style={styles.wrapperIcon}>
-            <FontAwesomeIcon icon={faEye} size={29} />
-          </View>
-          <TouchableOpacity style={styles.wrapperText} onPress={()=>Alert.alert('token','Actice')}>
-            <Text style={styles.textSubSetting}>Cek Token</Text>
-          </TouchableOpacity>
-        </View>
+        )}
       </View>
 
-      {/* hapus and logouy */}
-      <TouchableOpacity style={[styles.wrapperDelete, styles.shadow, {marginTop:40}]} onPress={()=>removeValue()}>
-        <Text style={styles.textSubSetting}>Hapus Akun</Text>
-      </TouchableOpacity>
-       {/* hapus and logouy */}
-       <TouchableOpacity style={[styles.wrapperDelete, styles.shadow]} onPress={()=>handleLogout()}>
-        <Text style={styles.textSubSetting}>Logout</Text>
-      </TouchableOpacity>
+      {loading == false ? (
+        <TouchableOpacity
+          style={[styles.wrapperDelete, styles.shadow, {marginTop: 40}]}
+          onPress={() => handleLogout()}>
+          <Text style={styles.textSubSetting}>Logout</Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          style={[styles.wrapperDelete, styles.shadow, {marginTop: 40}]}>
+          <View>
+            <ActivityIndicator size="large" />
+          </View>
+        </TouchableOpacity>
+      )}
+      
+      {/* <TouchableOpacity
+          style={[styles.wrapperDelete, styles.shadow, {marginTop: 40}]} onPress={cekverifikasi}>
+          <View>
+            <ActivityIndicator size="large" />
+          </View>
+        </TouchableOpacity> */}
     </Animated.View>
   );
 };
@@ -170,7 +206,7 @@ const styles = StyleSheet.create({
     height: '100%',
     // margin: 15,
   },
-  wrapperTextDevider:{
+  wrapperTextDevider: {
     borderBottomColor: '#4b5357',
     borderBottomWidth: 1,
   },

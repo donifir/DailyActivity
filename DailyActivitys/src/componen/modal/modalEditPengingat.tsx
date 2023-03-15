@@ -60,7 +60,7 @@ const ModalEditPengingat = ({route, navigation}: Props) => {
     if (!namaPengingat) {
       Alert.alert('Gagal', 'Maaf Nama Pengingat Belom Diisi');
     } else {
-      Alert.alert('Gagal', String(value));
+      Alert.alert('Sukses', 'Data berhasil diupdate');
       const formData = new FormData();
       formData.append('nama_pengingat', namaPengingat);
       formData.append('keterangan_pengingat', ketaranganPengingat);
@@ -92,17 +92,26 @@ const ModalEditPengingat = ({route, navigation}: Props) => {
   const dataListUser = useAppSelector(state => state.pengingat.dataListUser);
 
   useEffect(() => {
+    if (pengingatId) {
+      dispatch(getListUserPengingat(pengingatId));
+    }
+  }, [pengingatId])
+  
+  useEffect(() => {
+    if (userId && pengingatId) {
+      dispatch(getDattarUserPengingat({pengingatId, userId}));
+    }
+  }, [pengingatId,userId])
+  
+  useEffect(() => {
     getData();
-    dispatch(getListUserPengingat(pengingatId));
-    dispatch(getDattarUserPengingat({pengingatId, userId}));
-
     if (dataDaftarUser) {
       let newArray = dataDaftarUser.map(item => {
         return {value: item.email, label: item.email};
       });
       setItems(newArray);
     }
-  }, [dispatch, userId, JSON.stringify(dataDaftarUser)]);
+  }, [JSON.stringify(dataDaftarUser)]);
 
   // remove item
   const removeItems = (id: any) => {
@@ -115,10 +124,11 @@ const ModalEditPengingat = ({route, navigation}: Props) => {
 
   return (
     <View style={styles.wrapper}>
-      <Text style={{color: 'black'}}>{JSON.stringify(removeIdItem)}</Text>
-      {/* <>{Alert.alert('data', JSON.stringify(dataDaftarUser))}</>  */}
       <View>
         <ButtonbackComponent onPress={() => navigation.goBack()} />
+      </View>
+      <View style={styles.wrapperTextHeader}>
+        <Text style={styles.textHeader}>Ubah Data Pengingat</Text>
       </View>
       <View>
         <TextInput
@@ -175,7 +185,7 @@ const ModalEditPengingat = ({route, navigation}: Props) => {
           <TouchableOpacity style={styles.btn} onPress={SubmitData}>
             <ButtonComponent
               label="submit"
-              backgroundColor="#42A8C3"
+              backgroundColor="white"
               textColor="black"
               borderColor="black"
             />
@@ -204,6 +214,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
     paddingTop: 16,
+  },
+  wrapperTextHeader: {
+    paddingTop: 16,
+    marginBottom:16,
+    paddingHorizontal: 16,
+  },
+  textHeader: {
+    fontSize: 26,
   },
   btn: {
     marginTop: 60,

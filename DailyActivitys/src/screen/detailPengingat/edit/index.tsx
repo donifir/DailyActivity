@@ -4,6 +4,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../navigation/StackNavigation';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
 import {
+  getListKegiatan,
   kegiatanSelectors,
   postDeleteKegiatan,
   postUpdateKegiatan,
@@ -38,7 +39,6 @@ const EditKegiatanScreen = ({route, navigation}: Props) => {
 
   useEffect(() => {
     if (kegiatanDetail) {
-      
       if (kegiatanDetail.mulai_kegiatan) {
         setDate(new Date(kegiatanDetail.mulai_kegiatan))
       }
@@ -54,7 +54,7 @@ const EditKegiatanScreen = ({route, navigation}: Props) => {
   
 
  
-  const handlePost = () => {
+  const handlePost = async() => {
     const  formatDate =date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()
     const formData = new FormData();
     formData.append('id_pengingat', idPengingat);
@@ -62,8 +62,8 @@ const EditKegiatanScreen = ({route, navigation}: Props) => {
     formData.append('keterangan_kegiatan', keteranganKegiatan);
     formData.append('mulai_kegiatan', formatDate);
 
-    dispatch(postUpdateKegiatan({formData, idKegiatan}));
-
+    await dispatch(postUpdateKegiatan({formData, idKegiatan}));
+    dispatch(getListKegiatan(idPengingat));
     setIsSubmit(true)
   };
 
@@ -92,6 +92,7 @@ const EditKegiatanScreen = ({route, navigation}: Props) => {
 
   return (
     <View style={styles.wrapper}>
+       {/* <Text>{idPengingat}</Text> */}
       <View>
           <ButtonbackComponent onPress={() => navigation.goBack()} />
         </View>

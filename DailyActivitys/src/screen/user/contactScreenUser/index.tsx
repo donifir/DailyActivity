@@ -25,6 +25,9 @@ import {
   faSearch,
   faUserPlus,
 } from '@fortawesome/free-solid-svg-icons';
+import { useNavigation, useNavigationBuilder } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../../navigation/StackNavigation';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -34,6 +37,9 @@ const ContactScreenUser = () => {
   const [email, setEmail] = useState<string>('');
   const [isSubmiting, setSubmiting] = useState<boolean>(false);
   const [asyncEmail, setAsyncEmail] = useState<any>('');
+
+  const navigation =
+  useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const isSuccess = useAppSelector(state => state.friend.isSuccess);
   const dataError = useAppSelector(state => state.friend.dataError);
@@ -111,10 +117,10 @@ const ContactScreenUser = () => {
           </View>
         </View>
         {listFriend.map((friend, index) => (
-          <View style={styles.wrapperText} key={index}>
+          <TouchableOpacity style={styles.wrapperText} key={index} onPress={() => navigation.navigate('EditContactModal',{contactId:friend.id})}>
             <Text style={styles.texth1}>{friend.name}</Text>
             <Text style={styles.texth2}>{friend.email}</Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </>
     </Animated.View>

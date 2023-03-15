@@ -39,11 +39,13 @@ const ListPengingat = ({route, navigation}: Props) => {
   const dispatch = useAppDispatch();
   const idKegiatan = route.params.kegiatanId;
 
+  const listPenginat = useAppSelector(kegiatanSelectors.selectAll);
+
   useEffect(() => {
     dispatch(getListKegiatan(idKegiatan));
-  }, [dispatch, route.params.kegiatanId, isChecked]);
+  }, [dispatch, idKegiatan, JSON.stringify(listPenginat)]);
 
-  const listPenginat = useAppSelector(kegiatanSelectors.selectAll);
+ 
 
   const handleSubmit = async () => {
     const formData = new FormData();
@@ -53,18 +55,21 @@ const ListPengingat = ({route, navigation}: Props) => {
     setNamaPengingat('');
   };
 
-  const Truehandle = async (pengingat: any) => {
+  const Truehandle = async (pengingat: any) =>{
     setIsChecked(!pengingat.status);
     const formData = new FormData();
     formData.append('status', Number(!pengingat.status));
+
     await dispatch(
       postUpdateKegiatanCeklist({formData, idKegiatan: pengingat.id}),
     );
+    dispatch(getListKegiatan(idKegiatan));
     // Alert.alert('status',String(isChecked))
   };
 
   return (
     <SafeAreaView style={styles.wrapper}>
+      {/* <Text>{idKegiatan}</Text> */}
       <ImageBackground
         source={require('./../../../assets/image/Union1.png')}
         style={{flex: 1, alignItems: 'center'}}>
@@ -90,7 +95,7 @@ const ListPengingat = ({route, navigation}: Props) => {
               />
             </View>
             <View style={{flex: 9}}>
-              <Text style={styles.texth1}>{pengingat.nama_kegiatan}</Text>
+              <Text style={styles.texth1}>{pengingat.nama_kegiatan}/{pengingat.status}</Text>
               <Text style={styles.texth2}>
                 Time:{' '}
                 {

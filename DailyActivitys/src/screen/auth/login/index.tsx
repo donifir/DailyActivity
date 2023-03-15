@@ -32,19 +32,18 @@ const LoginScreen = ({route, navigation}: Props) => {
     formData.append('email', email);
     formData.append('password', password);
     dispatch(postDataLogin(formData));
-    setSubmiting(true)
+    setSubmiting(true);
   }
 
   const dataError = useAppSelector(state => state.auth.dataError);
   const isRedirect = useAppSelector(state => state.auth.isRedirect);
 
   useEffect(() => {
-    if (dataError==='invalid credensial' && submiting===true ) {
-      Alert.alert('Gagal','invalid credensial')
+    if (dataError === 'invalid credensial' && submiting === true) {
+      Alert.alert('Gagal', 'invalid credensial');
       dispatch(resetState());
-  }
-  }, [isRedirect, submiting,dataError])
-
+    }
+  }, [isRedirect, submiting, dataError]);
 
   return (
     <SafeAreaView style={styles.wrapper}>
@@ -65,7 +64,11 @@ const LoginScreen = ({route, navigation}: Props) => {
           value={email}
           onChangeText={value => setEmail(value)}
         />
-        {dataError.email && submiting==true?<Text style={styles.dataError}>{dataError.email}</Text>:<></>}
+        {dataError.email && submiting == true ? (
+          <Text style={styles.dataError}>{dataError.email}</Text>
+        ) : (
+          <></>
+        )}
         <TextInput
           autoCapitalize="none"
           variant="outlined"
@@ -75,11 +78,19 @@ const LoginScreen = ({route, navigation}: Props) => {
           value={password}
           onChangeText={value => setPassword(value)}
         />
-        {dataError.password && submiting==true?<Text style={styles.dataError}>{dataError.password}</Text>:<></>}
-      {/* {dataError==='invalid credensial' && submiting==true?[Alert.alert('gagal',dataError), setSubmiting(false)]:<></>} */}
-        <Text style={{marginHorizontal: 16, textAlign: 'right', fontSize: 15}}>
-          Forgot Password. ?
-        </Text>
+        {dataError.password && submiting == true ? (
+          <Text style={styles.dataError}>{dataError.password}</Text>
+        ) : (
+          <></>
+        )}
+        {/* {dataError==='invalid credensial' && submiting==true?[Alert.alert('gagal',dataError), setSubmiting(false)]:<></>} */}
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ModalForgotPassword')}>
+          <Text
+            style={{marginHorizontal: 16, textAlign: 'right', fontSize: 15}}>
+            Forgot Password. ?
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.wrapperBtn} onPress={handleSubmit}>
           <ButtonComponent
             label="Sign In"
@@ -150,8 +161,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     fontSize: 15,
   },
-  dataError:{
-    color:"red",
-    marginHorizontal:16,
-  }
+  dataError: {
+    color: 'red',
+    marginHorizontal: 16,
+  },
 });

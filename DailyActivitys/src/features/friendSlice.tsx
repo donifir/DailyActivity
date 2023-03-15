@@ -45,6 +45,22 @@ export const postCreateFriend = createAsyncThunk(
       }),
 );
 
+export const postDeleteFriend = createAsyncThunk(
+  'friend/deleteFriend',
+  async (friendId:any, {rejectWithValue}) =>
+    await axios
+      .post(`/delete-friends/${friendId}`, header)
+      // .post('/create-pengingat', formData, header)
+      .then(function (response) {
+        console.log(response.data.data);
+        return friendId;
+      })
+      .catch(function (error) {
+        console.log('data gagal', error.response.data.message);
+        return rejectWithValue(error.response.data.message);
+      }),
+);
+
 type Friend = { id: string; name: string; email: string }
 
 const friendAdapter = createEntityAdapter<Friend>({
@@ -94,6 +110,26 @@ export const friendSlice = createSlice({
         
     });
     builder.addCase(postCreateFriend.rejected, (state:any, action) => {
+      (state.isPending = false),
+        (state.isSuccess = false),
+        (state.isError = true),
+        state.dataError = action.payload
+    });
+
+    //delete
+    builder.addCase(postDeleteFriend.pending, (state:any, action) => {
+      (state.isPending = true),
+        (state.isSuccess = false),
+        (state.isError = false);
+    });
+    builder.addCase(postDeleteFriend.fulfilled, (state:any, action) => {
+      (state.isPending = false),
+        (state.isSuccess = true),
+        (state.isError = false)
+        friendAdapter.removeOne(state, action.payload);
+        
+    });
+    builder.addCase(postDeleteFriend.rejected, (state:any, action) => {
       (state.isPending = false),
         (state.isSuccess = false),
         (state.isError = true),

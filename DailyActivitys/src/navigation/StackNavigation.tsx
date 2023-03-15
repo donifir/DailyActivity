@@ -12,6 +12,9 @@ import ModalCreate from '../componen/modal/modalCreate';
 import ListPengingat from '../screen/detailPengingat/list';
 import EditKegiatanScreen from '../screen/detailPengingat/edit';
 import ModalEditPengingat from '../componen/modal/modalEditPengingat';
+import ModalEditContact from '../componen/modal/modalEditContact';
+import ModalUbahPassword from '../componen/modal/modalUbahPassword';
+import ModalForgotPassword from '../componen/modal/modalForgotPassword';
 
 export type RootStackParamList = {
   intro: undefined;
@@ -23,6 +26,9 @@ export type RootStackParamList = {
   ListPengingat:{kegiatanId:any};
   EditKegiatanScreen:{kegiatanId:string};
   EditPengingatScreen:{pengingatId:string};
+  EditContactModal:{contactId:string};
+  ModalUbahPassword:{email:string};
+  ModalForgotPassword:undefined;
 };
 
 const StackNavigation = () => {
@@ -67,6 +73,9 @@ const StackNavigation = () => {
             <RootStack.Screen name="ModalForm" component={ModalCreate} />
             <RootStack.Screen name="EditKegiatanScreen" component={EditKegiatanScreen} />
             <RootStack.Screen name="EditPengingatScreen" component={ModalEditPengingat} />
+            <RootStack.Screen name="EditContactModal" component={ModalEditContact} />
+            <RootStack.Screen name="ModalUbahPassword" component={ModalUbahPassword} />
+         
           </RootStack.Group>
         </>
       ) : (
@@ -76,6 +85,9 @@ const StackNavigation = () => {
             <RootStack.Screen name="welcomeScreen" component={WelcomeScreen} />
             <RootStack.Screen name="loginScreen" component={LoginScreen} />
             <RootStack.Screen name="registerScreen" component={RegisterScreen} />
+          </RootStack.Group>
+          <RootStack.Group screenOptions={{presentation: 'modal'}}>
+            <RootStack.Screen name="ModalForgotPassword" component={ModalForgotPassword} />
           </RootStack.Group>
         </>
       )}

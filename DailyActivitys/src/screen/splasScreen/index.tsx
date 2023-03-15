@@ -1,8 +1,9 @@
 import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
-import {resetState} from '../../features/authSlice';
+import {cekLogin, resetState} from '../../features/authSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -10,15 +11,33 @@ const windowHeight = Dimensions.get('window').height;
 const SplashScreen = () => {
   const redirect = useAppSelector(state => state.auth.isRedirect);
   const dispatch = useAppDispatch();
+  const [email, setEmail] = useState<string>('')
+
+  // getEmail
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('email')
+      if(value !== null) {
+        setEmail(value)
+      }
+    } catch(e) {
+      // error reading value
+    }
+  }
 
   useEffect(() => {
+    getData()
+    if (email) {
+    console.log('dataaa use efect')
+      dispatch(cekLogin(email))
+    }
     if (redirect === true) {
       setTimeout(() => {
         dispatch(resetState());
       }, 1700);
     }
     
-  }, [redirect]);
+  }, [redirect,email]);
 
   return (
     <Animated.View

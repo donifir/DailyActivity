@@ -42,14 +42,6 @@ const RegisterScreen = ({route, navigation}: Props) => {
   const dataError = useAppSelector(state => state.auth.dataError);
   const isRedirect = useAppSelector(state => state.auth.isRedirect);
 
-  // useEffect(() => {
-  //   if (isRedirect==true && submiting==true) {
-  //     navigation.push('home')
-  //   }
-  // }, [isRedirect,submiting])
-  
-
-
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.wrapperText}>

@@ -74,6 +74,9 @@ const ModalCreate = ({route, navigation}: Props) => {
       <View>
         <ButtonbackComponent onPress={() => navigation.goBack()} />
       </View>
+      <View style={styles.wrapperTextHeader}>
+        <Text style={styles.textHeader}>Tambah Pengingat</Text>
+      </View>
       <View>
         <TextInput
           variant="standard"
@@ -97,7 +100,7 @@ const ModalCreate = ({route, navigation}: Props) => {
       <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
         <ButtonComponent
           label="submit"
-          backgroundColor="#42A8C3"
+          backgroundColor="white"
           textColor="black"
           borderColor="black"
         />
@@ -113,6 +116,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
     paddingTop: 15,
+  },
+  wrapperTextHeader: {
+    paddingTop: 16,
+    paddingHorizontal: 16,
+  },
+  textHeader: {
+    fontSize: 26,
   },
   text: {
     marginVertical: 10,

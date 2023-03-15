@@ -58,10 +58,12 @@ const HomeScreenUser = () => {
 
   useEffect(() => {
     getData();
-    dispatch(getListPengingat(userId));
+    if (userId) {
+      dispatch(getListPengingat(userId));
+    }
   }, [dispatch, userId, userId]);
 
-  const navigateToEdit = (pengingatId:any) => {
+  const navigateToEdit = (pengingatId: any) => {
     navigation.push('EditPengingatScreen', {pengingatId});
   };
 
@@ -72,7 +74,7 @@ const HomeScreenUser = () => {
       style={[styles.wrapper]}>
       <ScrollView style={{marginBottom: 45}}>
         {/* content */}
-        <Text style={{color: 'red'}}>ahahha:{userId}</Text>
+        {/* <Text style={{color: 'red'}}>ahahha:{userId}</Text> */}
         {listPenginat.map(
           (pengingat, index) => (
             // pengingat
@@ -113,17 +115,19 @@ const HomeScreenUser = () => {
                     </View>
                   </View>
                   <View style={styles.wrapperStatus}>
-                    <Text>Prosess</Text>
+                    <Text>Auditor</Text>
                   </View>
                   <View style={styles.wrapperTag}>
-                    <Text style={{fontSize: 14, color: '#2EA3F8'}}>
-                      @doni, @firman, @syah
-                    </Text>
+                    {pengingat.list_user.map(number => (
+                      <Text style={{fontSize: 14, color: '#2EA3F8'}} key={number.id}>
+                        @{number.name},{ ' '}
+                      </Text>
+                    ))}
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.wrapperButtonDetail}
-                  onPress={()=>navigateToEdit(pengingat.id)}>
+                  onPress={() => navigateToEdit(pengingat.id)}>
                   <FontAwesomeIcon
                     icon={faAngleDoubleUp}
                     size={24}
@@ -204,6 +208,7 @@ const styles = StyleSheet.create({
     height: '15%',
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row',
   },
   wrapperPengingat: {
     position: 'absolute',

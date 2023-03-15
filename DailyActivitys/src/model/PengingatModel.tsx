@@ -4,4 +4,5 @@ export interface PengingatModel{
   keterangan_pengingat:string;
   mulai_pengingat?:Date;
   selesai_pengingat?:Date;
+  list_user:any[];
 }
