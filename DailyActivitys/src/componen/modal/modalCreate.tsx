@@ -123,6 +123,8 @@ const styles = StyleSheet.create({
   },
   textHeader: {
     fontSize: 26,
+    marginBottom:10,
+    color:'black'
   },
   text: {
     marginVertical: 10,

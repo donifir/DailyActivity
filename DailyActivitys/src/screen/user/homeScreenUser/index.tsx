@@ -115,7 +115,7 @@ const HomeScreenUser = () => {
                     </View>
                   </View>
                   <View style={styles.wrapperStatus}>
-                    <Text>Auditor</Text>
+                    <Text style={{color:'black'}}>Auditor</Text>
                   </View>
                   <View style={styles.wrapperTag}>
                     {pengingat.list_user.map(number => (

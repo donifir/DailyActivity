@@ -87,7 +87,7 @@ const LoginScreen = ({route, navigation}: Props) => {
         <TouchableOpacity
           onPress={() => navigation.navigate('ModalForgotPassword')}>
           <Text
-            style={{marginHorizontal: 16, textAlign: 'right', fontSize: 15}}>
+            style={{marginHorizontal: 16, textAlign: 'right', fontSize: 15, color:'black'}}>
             Forgot Password. ?
           </Text>
         </TouchableOpacity>
@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
   signup: {
     marginHorizontal: 10,
     fontSize: 15,
+    color:'black'
   },
   dataError: {
     color: 'red',

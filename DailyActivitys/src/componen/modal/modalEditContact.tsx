@@ -85,9 +85,12 @@ const styles = StyleSheet.create({
   wrapperTextHeader: {
     paddingTop: 16,
     paddingHorizontal: 16,
+    marginBottom:10,
+    color:'black'
   },
   textHeader: {
     fontSize: 26,
+    color:'black'
   },
   wrapperTextInput:{
     paddingTop: 16,

@@ -93,7 +93,7 @@ const SetingSreenUser = () => {
           <Avatar label={name} autoColor />
         </View>
         <View style={styles.wrapperNamaAvatar}>
-          <Text style={{fontSize: 20, fontWeight: '500'}}>{name}</Text>
+          <Text style={{fontSize: 20, fontWeight: '500', color:'black'}}>{name}</Text>
           <Text style={{fontSize: 16, color: '#4b5357'}}>{email}</Text>
         </View>
       </View>
@@ -221,6 +221,7 @@ const styles = StyleSheet.create({
   textSubSetting: {
     fontSize: 18,
     fontWeight: '400',
+    color:'black'
   },
   wrapperSub: {
     marginTop: 20,

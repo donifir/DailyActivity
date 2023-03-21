@@ -94,6 +94,7 @@ const ContactScreenUser = () => {
             <TextInput
               style={styles.input}
               placeholder="tambahkan teman dengan email"
+              placeholderTextColor="grey" 
               onChangeText={value => setEmail(value)}
               value={email}
               autoCapitalize='none'
@@ -160,6 +161,7 @@ const styles = StyleSheet.create({
     color: '#4b5357',
   },
   wrapperCari: {
+    marginTop:10,
     width: windowWidth,
     height: 50,
     // backgroundColor: 'yellow',

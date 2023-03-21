@@ -219,9 +219,12 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     marginBottom:16,
     paddingHorizontal: 16,
+    // marginBottom:10,
+    color:'black'
   },
   textHeader: {
     fontSize: 26,
+    color:'black'
   },
   btn: {
     marginTop: 60,

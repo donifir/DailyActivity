@@ -3,6 +3,7 @@ import {
   Dimensions,
   Image,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -25,7 +26,7 @@ const RegisterScreen = ({route, navigation}: Props) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
-  const [submiting, setSubmiting] = useState<boolean>(false)
+  const [submiting, setSubmiting] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
   const handleSubmit = () => {
@@ -36,7 +37,7 @@ const RegisterScreen = ({route, navigation}: Props) => {
     formData.append('confirm_password', confirmPassword);
 
     dispatch(postDataRegister(formData));
-    setSubmiting(true)
+    setSubmiting(true);
   };
 
   const dataError = useAppSelector(state => state.auth.dataError);
@@ -44,69 +45,91 @@ const RegisterScreen = ({route, navigation}: Props) => {
 
   return (
     <SafeAreaView style={styles.wrapper}>
-      <View style={styles.wrapperText}>
-        <Text style={styles.textH1}>Create Account</Text>
-        <Text style={styles.textH2}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </Text>
-      </View>
-      <View style={styles.wrapperForm}>
-        <TextInput
-          autoCapitalize='none'
-          variant="outlined"
-          label="Name"
-          style={{margin: 16}}
-          color="black"
-          value={nama}
-          onChangeText={value => setNama(value)}
-        />
-        {dataError.nama && submiting==true? <Text style={styles.dataError}>{dataError.nama}</Text> : <></>}
-        <TextInput
-          autoCapitalize='none'
-          variant="outlined"
-          label="Email"
-          style={{margin: 16}}
-          color="black"
-          value={email}
-          onChangeText={value => setEmail(value)}
-        />
-        {dataError.email && submiting==true? <Text style={styles.dataError}>{dataError.email}</Text> : <></>}
-        <TextInput
-          autoCapitalize='none'
-          variant="outlined"
-          label="Password"
-          style={{margin: 16}}
-          color="black"
-          value={password}
-          onChangeText={value => setPassword(value)}
-        />
-        {dataError.password && submiting==true? <Text style={styles.dataError}>{dataError.password}</Text> : <></>}
-        <TextInput
-          autoCapitalize='none'
-          variant="outlined"
-          label="Confirm Password"
-          style={{margin: 16}}
-          color="black"
-          value={confirmPassword}
-          onChangeText={value => setConfirmPassword(value)}
-        />
-        {dataError.confirm_password && submiting==true? <Text style={styles.dataError}>{dataError.confirm_password}</Text> : <></>}
-        <TouchableOpacity style={styles.wrapperBtn} onPress={handleSubmit}>
-          <ButtonComponent
-            label="Sign Up"
-            backgroundColor="#407BFF"
-            textColor="white"
-            borderColor="black"
-          />
-        </TouchableOpacity>
-        <View style={styles.wrapperSignUp}>
-          <Image source={require('./../../../assets/image/Rectangle29.png')} />
-          <TouchableOpacity onPress={() => navigation.push('loginScreen')}>
-            <Text style={styles.signup}>Or Sign In</Text>
-          </TouchableOpacity>
-          <Image source={require('./../../../assets/image/Rectangle30.png')} />
+      <ScrollView>
+        <View style={styles.wrapperText}>
+          <Text style={styles.textH1}>Create Account</Text>
+          <Text style={styles.textH2}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </Text>
         </View>
-      </View>
+        <View style={styles.wrapperForm}>
+          <TextInput
+            autoCapitalize="none"
+            variant="outlined"
+            label="Name"
+            style={{margin: 16}}
+            color="black"
+            value={nama}
+            onChangeText={value => setNama(value)}
+          />
+          {dataError.nama && submiting == true ? (
+            <Text style={styles.dataError}>{dataError.nama}</Text>
+          ) : (
+            <></>
+          )}
+          <TextInput
+            autoCapitalize="none"
+            variant="outlined"
+            label="Email"
+            style={{margin: 16}}
+            color="black"
+            value={email}
+            onChangeText={value => setEmail(value)}
+          />
+          {dataError.email && submiting == true ? (
+            <Text style={styles.dataError}>{dataError.email}</Text>
+          ) : (
+            <></>
+          )}
+          <TextInput
+            autoCapitalize="none"
+            variant="outlined"
+            label="Password"
+            style={{margin: 16}}
+            color="black"
+            value={password}
+            onChangeText={value => setPassword(value)}
+          />
+          {dataError.password && submiting == true ? (
+            <Text style={styles.dataError}>{dataError.password}</Text>
+          ) : (
+            <></>
+          )}
+          <TextInput
+            autoCapitalize="none"
+            variant="outlined"
+            label="Confirm Password"
+            style={{margin: 16}}
+            color="black"
+            value={confirmPassword}
+            onChangeText={value => setConfirmPassword(value)}
+          />
+          {dataError.confirm_password && submiting == true ? (
+            <Text style={styles.dataError}>{dataError.confirm_password}</Text>
+          ) : (
+            <></>
+          )}
+          <TouchableOpacity style={styles.wrapperBtn} onPress={handleSubmit}>
+            <ButtonComponent
+              label="Sign Up"
+              backgroundColor="#407BFF"
+              textColor="white"
+              borderColor="black"
+            />
+          </TouchableOpacity>
+          <View style={styles.wrapperSignUp}>
+            <Image
+              source={require('./../../../assets/image/Rectangle29.png')}
+            />
+            <TouchableOpacity onPress={() => navigation.push('loginScreen')}>
+              <Text style={styles.signup}>Or Sign In</Text>
+            </TouchableOpacity>
+            <Image
+              source={require('./../../../assets/image/Rectangle30.png')}
+            />
+          </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -142,7 +165,7 @@ const styles = StyleSheet.create({
   },
   wrapperForm: {
     width: windowWidth,
-    height: windowHeight * 0.5,
+    // height: windowHeight * 0.5,
     // backgroundColor: 'blue',
   },
   wrapperBtn: {
@@ -160,10 +183,11 @@ const styles = StyleSheet.create({
   signup: {
     marginHorizontal: 10,
     fontSize: 15,
+    color: 'black',
   },
-  dataError:{
-    marginHorizontal:16,
-    color:'red',
-    fontSize:14,
-  }
+  dataError: {
+    marginHorizontal: 16,
+    color: 'red',
+    fontSize: 14,
+  },
 });
