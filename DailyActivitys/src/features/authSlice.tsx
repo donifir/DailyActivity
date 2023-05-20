@@ -4,7 +4,7 @@ import {UserModel} from '../model/UserModel';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-axios.defaults.baseURL = 'http://192.168.91.12:8000/api';
+axios.defaults.baseURL = 'http://192.168.91.10:8000/api';
 const header = {
   headers: {
     'Content-Type': 'multipart/form-data',
